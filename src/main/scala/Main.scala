@@ -15,7 +15,7 @@ object Main {
     val raw_string = raw.mkString
     raw.close()
     val deserialized: List[CountryLite] = readFromString[List[CountryLite]](raw_string)
-    val out_content = deserialized.sortBy(_.area)(Ordering[BigDecimal ].reverse).take(10)
+    val out_content = deserialized.filter(_.region == "Africa").sortBy(_.area)(Ordering[BigDecimal ].reverse).take(10)
     val out_content_final = out_content.map(x => x.into[OutFileClass]
       .withFieldComputed(_.name, _.name.official)
       .withFieldComputed(_.capital, _.capital.head)
